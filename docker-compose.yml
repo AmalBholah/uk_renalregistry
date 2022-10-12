@@ -1,0 +1,50 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./.data/db:/var/lib/postgresql/data
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    restart: always
+    environment:
+      - POSTGRES_HOST=db
+    env_file:
+      - .env
+    volumes:
+      # We need to serve collected static files from our nginx container (below)
+      # so we mount the nginx container's static files volume here.
+      - static_files:/app/src/static
+    depends_on:
+      db:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:1.19.6
+    volumes:
+      - ./nginx:/etc/nginx/templates
+      # Use the collected static files from our 'web' container (above) as the
+      # source of static files for our nginx container.
+      - static_files:/var/www/static
+    ports:
+      - 8000:9999
+    environment:
+      - APP_HOST=web
+      - APP_PORT=8000
+      - PORT=9999
+    depends_on:
+      - web
+    restart: always
+
+volumes:
+  static_files:

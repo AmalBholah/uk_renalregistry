@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+{{ patientstop_form.media }}
+{% load static %}
+<script src="{% static 'js/patient_stop.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="m-5">
+        <h1>{{ view_title }}</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-5">
+            {% if patient_current_krt_is_dialysis %}
+            <form class="" action="" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <h2>Patient stopping dialysis:</h2>
+                </div>
+                <div class="mb-3">
+                    {{patientstop_form.last_dialysis_date | as_crispy_field}}
+                </div>
+                <div class="mb-3">
+                    {{patientstop_form.stop_reason | as_crispy_field}}
+                </div>
+                <div class="mb-3 dod">
+                    {{patientstop_form.dod | as_crispy_field}}
+                </div>
+                <div class="mb-3 dod">
+                    {{patientstop_form.cause_of_death | as_crispy_field}}
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary btn-block btn-sm">Submit</button>
+                </div>
+            </form>
+            
+        </div>
+        {% else %}
+        <div class="col-10">
+            <p>The patient should be in dialysis to stop a dialysis mode.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,336 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+{{ patient_form.media }}
+{% load static %}
+<script src="{% static 'js/form_tabs.js' %}"></script>
+<script src="{% static 'js/patient_register.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if patient_form.non_field_errors %}
+<ul>
+    {% for error in patient_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if patientregistration_form.non_field_errors %}
+<ul>
+    {% for error in patientregistration_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if patientakimeasurement_form.non_field_errors %}
+<ul>
+    {% for error in patientakimeasurement_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if patientkrtmodality_first_form.non_field_errors %}
+<ul>
+    {% for error in patientkrtmodality_first_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if patientkrtmodality_2_form.non_field_errors %}
+<ul>
+    {% for error in patientkrtmodality_2_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if patientkrtmodality_3_form.non_field_errors %}
+<ul>
+    {% for error in patientkrtmodality_3_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if patientkrtmodality_4_form.non_field_errors %}
+<ul>
+    {% for error in patientkrtmodality_4_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if patientkrtmodality_5_form.non_field_errors %}
+<ul>
+    {% for error in patientkrtmodality_5_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if patientkrtmodality_present_form.non_field_errors %}
+<ul>
+    {% for error in patientkrtmodality_present_form.non_field_errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="container">
+    <div class="m-5">
+        <h1>{{ view_title }}</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <form class="" id="mrr_form" action="" method="post">
+                {% csrf_token %}
+                <div class="tab">
+                    <div class="mb-3">
+                        <h2>Primary details:</h2>
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.id_type | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.pid | as_crispy_field}}
+                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="NIC No. is 1 letter followed by DDMMYY digits of date of birth followed by 6 digits then one alphanumeric symbol (14 characters). Passport number is 13 characters long, all alphanumeric."><i class="bi bi-info-circle"></i></a>
+                    </div>
+                    <div class="mb-3">
+                        {{patientregistration_form.health_institution | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientregistration_form.unit_no1 | as_crispy_field}}
+                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Unit number is a 6 digit number."><i class="bi bi-info-circle"></i></a>
+                    </div>
+                    <div class="mb-3">
+                        {{patientregistration_form.unit_no2 | as_crispy_field}}
+                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Unit number is a 6 digit number."><i class="bi bi-info-circle"></i></a>
+                    </div>
+                    <div class="mb-3">
+                        {{patientregistration_form.unit_no3 | as_crispy_field}}
+                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Unit number is a 6 digit number."><i class="bi bi-info-circle"></i></a>
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.surname | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.name | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.dob | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.gender | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.postcode | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        <a href="https://www.mauritiuspost.mu/products-and-services/post-code-and-zip-code-finder" target="_blank">Link to postcode searcher</a>
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.street | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.landline_number | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.mobile_number | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.alternative_numbers | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.email | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.email2 | as_crispy_field}}
+                    </div>
+                </div>
+                <div class="tab">
+                    <div class="mb-3">
+                        <h2>Other details:</h2>
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.height | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.weight | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.birth_weight | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.ethnic | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.maritalstatus | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.occupationalstatus | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.current_occupation | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.prev_occupation1 | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.prev_occupation2 | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.prev_occupation3 | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.prev_occupation4 | as_crispy_field}}
+                    </div>
+                </div>
+                <div class="tab">
+                    <div class="mb-3">
+                        <h2>Renal diagnosis and KRT modality:</h2>
+                    </div>
+                    <div class="p-3 mb-2 bg-warning text-dark">
+                        <p>If the present KRT modality is also the first KRT modality for the patient, please enter the information only in the section for Present KRT modality.</p>
+                    </div>
+                    <div class="mb-3">
+                        <p>Primary renal diagnosis</p>
+                        {{ patientrenaldiagnosis_form.code | as_crispy_field}}
+                        {{ patientrenaldiagnosis_form.description | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        <p>Secondary renal diagnosis</p>
+                        {{ patientsecondaryrenaldiagnosis_form.code | as_crispy_field}}
+                        {{ patientsecondaryrenaldiagnosis_form.description | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        <a href="https://www.era-edta-reg.org/prd.jsp" target="_blank">Link to ERA-EDTA code site</a>
+                    </div>
+                    <div class="mb-3">
+                        {{patient_form.in_krt_modality | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientakimeasurement_form.creatinine | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientakimeasurement_form.egfr | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientakimeasurement_form.hb | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientakimeasurement_form.measurement_date | as_crispy_field}}
+                    </div>
+                    <p>Give chronology of previous KRT modalities</p>
+                    <!-- registration -->
+                    <div class="p-3 mb-2 bg-warning text-dark">
+                        <p>Insert modalities from oldest to newest start date</p>
+                    </div>
+                    <legend>Previous KRT Modalities</legend>
+                    <div class="row g-2">
+                        <div class="col-sm">
+                            {{ patientkrtmodality_first_form.modality | as_crispy_field}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ patientkrtmodality_first_form.start_date | as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-sm">
+                            {{ patientkrtmodality_2_form.modality | as_crispy_field}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ patientkrtmodality_2_form.start_date | as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-sm">
+                            {{ patientkrtmodality_3_form.modality | as_crispy_field}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ patientkrtmodality_3_form.start_date | as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-sm">
+                            {{ patientkrtmodality_4_form.modality | as_crispy_field}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ patientkrtmodality_4_form.start_date | as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-sm">
+                            {{ patientkrtmodality_5_form.modality | as_crispy_field}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ patientkrtmodality_5_form.start_date | as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="p-3 mb-2 bg-info text-dark" id="current_krt_modality">
+                        <legend>Present KRT modality</legend>
+                        <p>Please not if the patient is in KRT modality but the KRT modality information was inserted using the KRT modality form, it won't be shown here.</p>
+                        <p>If you insert a new patient KRT modality here, this will become the current KRT modality.</p>
+                        <div class="row g-2">
+                            <div class="col-sm">
+                                {{ patientkrtmodality_present_form.modality | as_crispy_field}}
+                            </div>
+                            <div class="col-sm-6">
+                                {{ patientkrtmodality_present_form.start_date | as_crispy_field}}
+                            </div>
+                            <div class="col-sm-6">
+                                {{ patientkrtmodality_present_form.hd_unit | as_crispy_field}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab">
+                    <div class="mb-3">
+                        <h2>Initial assessment:</h2>
+                    </div>
+                    <div class="mb-3">
+                        {{patientassessment_form.comorbidity | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientassessment_form.disability | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientassessment_form.clinical_frailty | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientassessment_form.smokingstatus | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientassessment_form.alcoholuse | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientassessment_form.hepatitis_b | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientassessment_form.hepatitis_c | as_crispy_field}}
+                    </div>
+                    <div class="mb-3">
+                        {{patientassessment_form.hiv | as_crispy_field}}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button type="button" class="prevBtn btn btn-primary btn-block btn-sm">Previous</button>
+                    <button type="button" class="nextBtn btn btn-primary btn-block btn-sm">Next</button>
+                </div>
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

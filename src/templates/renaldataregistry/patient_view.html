@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load patient_view_extras %}
+{% block content %}
+<div class="container">
+    <div class="m-5">
+        <h1>Patient details</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="p-3 mb-2 bg-warning text-dark">
+                <p>Please note the information presented here is the data entered in the Patient's registration form.</p>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr class="table-dark">
+                            <th colspan="4" class="text-center">NATIONAL RENAL REGISTRY: PATIENT DETAIL VIEW
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient.patientregistration "health_institution" %}
+                                </span>
+                                {{ patient.patientregistration.health_institution }}</td>
+                            <td><span class="fw-bold">Unit Number/s</span>
+                                {{ patient.patientregistration.unit_no1|default_if_none:"--" }},{{ patient.patientregistration.unit_no2|default_if_none:"--" }},{{ patient.patientregistration.unit_no3|default_if_none:"--" }}
+                            </td>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "dob" %} </span>
+                                {{ patient.dob }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "surname" %}
+                                </span>{{ patient.surname }}</td>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "name" %}
+                                </span>{{ patient.name }}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "ethnic" %}
+                                </span>{{ patient.get_ethnic_display }}</td>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "gender" %}
+                                </span>{{ patient.get_gender_display }}</td>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "maritalstatus" %}
+                                </span>{{ patient.get_maritalstatus_display }}</td>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "occupationalstatus" %}
+                                </span>{{ patient.get_occupationalstatus_display }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Significant previous occupations</span>
+                                {{ patient.prev_occupation1|default_if_none:"--" }},
+                                {{ patient.prev_occupation2|default_if_none:"--" }},
+                                {{ patient.prev_occupation3|default_if_none:"--" }},
+                                {{ patient.prev_occupation4|default_if_none:"--" }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "pid" %}
+                                </span>{{ patient.pid }}</td>
+                            <td colspan="3"><span class="fw-bold">Phone Nos</span>
+                                {{ patient.landline_number|default_if_none:"--" }},
+                                {{ patient.mobile_number|default_if_none:"--" }},
+                                {{ patient.alternative_numbers|default_if_none:"--" }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span class="fw-bold">Address
+                                </span>{{ patient.street|default_if_none:"--" }} -
+                                {{ patient.postcode|default_if_none:"--" }}</td>
+                            <td colspan="2"><span class="fw-bold">Email</span>
+                                {{ patient.email|default_if_none:"--" }}, {{ patient.email2|default_if_none:"--" }}
+                            </td>
+                        </tr>
+                        {% if patient_primaryrenaldiagnosis %}
+                        <tr>
+                            <td colspan="2"><span class="fw-bold">Primary renal diagnosis </span>{{ patient_primaryrenaldiagnosis.description }}</td>
+                            <td colspan="2"><span class="fw-bold">ERA-EDTA CODE </span>{{ patient_primaryrenaldiagnosis.code }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if patient_secondaryrenaldiagnosis %}
+                        <tr>
+                            <td colspan="2"><span class="fw-bold">Secondary renal diagnosis </span>{{ patient_secondaryrenaldiagnosis.description }}</td>
+                            <td colspan="2"><span class="fw-bold">ERA-EDTA CODE </span>{{ patient_secondaryrenaldiagnosis.code }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "height" %}
+                                </span>{{ patient.height|default_if_none:"--" }}</td>
+                            <td colspan="2"><span class="fw-bold">{% get_verbose_field_name patient "weight" %}
+                                </span>{{ patient.weight|default_if_none:"--" }}</td>
+                            <td><span class="fw-bold">{% get_verbose_field_name patient "birth_weight" %}
+                                </span>{{ patient.birth_weight|default_if_none:"--" }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">{% get_verbose_field_name patient "in_krt_modality" %}
+                                </span>{{ patient.in_krt_modality }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Chronology of previous and present KRT modalities (Listing max. 6 modalities)
+                                </span>
+                                {% if patient_krtmodalities %}
+                                {% for krt_modality in patient_krtmodalities.all  %}
+                                <p>Date started: {{ krt_modality.start_date|default_if_none:"--" }}, Modality: {{ krt_modality.get_modality_display }}</p>
+                                {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Comorbidities </span>
+                                {% if patient_assessement %}
+                                {% for comorbidity in patient_assessement.comorbidity.all  %}
+                                <p>{{ comorbidity }}</p>
+                                {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Disabilities </span>
+                                {% if patient_assessement %}
+                                {% for disability in patient_assessement.disability.all  %}
+                                <p>{{ disability }}</p>
+                                {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Clinical frailty scale (1 to 9) </span>
+                                {% if patient_assessement %}
+                                {{ patient_assessement.clinical_frailty }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Smoking status </span>
+                                {% if patient_assessement %}
+                                {{ patient_assessement.get_smokingstatus_display }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Alcohol disorder </span>
+                                {% if patient_assessement %}
+                                {{ patient_assessement.get_alcoholuse_display }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Hepatitis B </span>
+                                {% if patient_assessement %}
+                                {{ patient_assessement.get_hepatitis_b_display }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Hepatitis C </span>
+                                {% if patient_assessement %}
+                                {{ patient_assessement.get_hepatitis_c_display }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">HIV </span>
+                                {% if patient_assessement %}
+                                {{ patient_assessement.get_hiv_display }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><span class="fw-bold">Creation date </span>
+                                {{ patient.patientregistration.created_at }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
